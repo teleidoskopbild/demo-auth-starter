@@ -2,17 +2,24 @@ import "./ProfilePage.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ContentBox } from "../components/ContentBox";
+import { useAuth } from "@clerk/clerk-react";
 
 const apiUrl = "http://localhost:3000/profile";
 
 export function ProfilePage() {
+  const { getToken } = useAuth();
   const [apiData, setApiData] = useState("");
   const [error, setError] = useState("");
   useEffect(() => {
     async function fetchData() {
       try {
         setError("");
-        const { data } = await axios.get(apiUrl);
+        const token = await getToken();
+        const { data } = await axios.get(apiUrl, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setApiData(data);
       } catch (error) {
         console.log(error);

@@ -24,6 +24,7 @@ export function HomePage() {
   return (
     <>
       <h1>Home</h1>
+
       <p>
         This is <strong>public</strong> content!
       </p>
